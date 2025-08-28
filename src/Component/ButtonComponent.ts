@@ -1,4 +1,4 @@
-import { AbstractComponent, ContentManager } from "@ludeschersoftware/scenerenderer";
+import { InputStateInterface, AbstractComponent } from "@ludeschersoftware/scenerenderer";
 import TextComponent from "./TextComponent";
 import { CollidesWith } from "../Utils/CollisionHelper";
 
@@ -13,14 +13,6 @@ interface ButtonOptions {
     textAlign?: CanvasTextAlign;
     textBaseline?: CanvasTextBaseline;
     font?: string;
-}
-
-interface InputState {
-    mouseLeftDown: boolean;
-    mousePositionCamera: {
-        x: number;
-        y: number;
-    };
 }
 
 class ButtonComponent extends AbstractComponent {
@@ -54,25 +46,25 @@ class ButtonComponent extends AbstractComponent {
         // Optional setup logic
     }
 
-    public LoadContent(contentManager: ContentManager): void {
+    public LoadContent(): void {
         // Optional content loading logic
     }
 
-    public Update(deltaTime: number, inputState: InputState): void | false {
+    public Update(_deltaTime: number, inputState: InputStateInterface): void | false {
         const CAM_HITBOX = {
-            x: inputState.mousePositionCamera.x,
-            y: inputState.mousePositionCamera.y,
+            x: inputState.MousePositionCamera.x,
+            y: inputState.MousePositionCamera.y,
             width: 1,
             height: 1,
         };
 
-        if (inputState.mouseLeftDown) {
+        if (inputState.MouseLeftDown) {
             if (!this.m_clicked && CollidesWith(this, CAM_HITBOX)) {
                 this.m_clicked = true;
                 this.m_callback();
-                inputState.mouseLeftDown = false;
+                inputState.MouseLeftDown = false;
             } else if (CollidesWith(this, CAM_HITBOX)) {
-                inputState.mouseLeftDown = false;
+                inputState.MouseLeftDown = false;
             }
         } else if (this.m_clicked) {
             this.m_clicked = false;

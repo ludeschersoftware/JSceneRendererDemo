@@ -1,4 +1,4 @@
-import { AbstractComponent, ContentManager } from "@ludeschersoftware/scenerenderer";
+import { AbstractComponent } from "@ludeschersoftware/scenerenderer";
 
 interface TextOptions {
     x: number;
@@ -33,11 +33,11 @@ class TextComponent extends AbstractComponent {
         // Optional setup logic
     }
 
-    public LoadContent(contentManager: ContentManager): void {
+    public LoadContent(): void {
         // Optional content loading logic
     }
 
-    public Update(deltaTime: number, inputState: unknown): false | void {
+    public Update(): false | void {
         // Optional update logic
     }
 

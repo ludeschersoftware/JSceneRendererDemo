@@ -1,19 +1,18 @@
 import { Box } from '@ludeschersoftware/types';
-import { AbstractComponent, ContentManager } from '@ludeschersoftware/scenerenderer';
+import { AbstractComponent, InputStateInterface } from '@ludeschersoftware/scenerenderer';
 import TextComponent from './TextComponent';
 import { CollidesWith } from '../Utils/CollisionHelper';
 
-interface ButtonOptions extends Partial<Box> {
+interface ButtonOptions extends Box {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
     title?: string;
     backgroundColor?: string;
     fillStyle?: string;
     textAlign?: CanvasTextAlign;
     textBaseline?: CanvasTextBaseline;
-}
-
-interface InputState {
-    mouseLeftDown: boolean;
-    mousePositionWorld: { x: number; y: number; };
 }
 
 class WorldButtonComponent extends AbstractComponent {
@@ -45,29 +44,29 @@ class WorldButtonComponent extends AbstractComponent {
         // Optional setup logic
     }
 
-    public LoadContent(contentManager: ContentManager): void {
+    public LoadContent(): void {
         // Optional content loading logic
     }
 
-    public Update(deltaTime: number, inputState: InputState): false | void {
+    public Update(_deltaTime: number, inputState: InputStateInterface): false | void {
         const CAM_HITBOX: Box = {
-            x: inputState.mousePositionWorld.x,
-            y: inputState.mousePositionWorld.y,
+            x: inputState.MousePositionWorld.x,
+            y: inputState.MousePositionWorld.y,
             width: 1,
             height: 1,
         };
 
-        if (inputState.mouseLeftDown === true) {
+        if (inputState.MouseLeftDown === true) {
             if (this.m_clicked === false) {
                 if (CollidesWith(this, CAM_HITBOX) === true) {
                     this.m_clicked = true;
 
                     this.m_callback();
 
-                    inputState.mouseLeftDown = false;
+                    inputState.MouseLeftDown = false;
                 }
             } else if (CollidesWith(this, CAM_HITBOX) === true) {
-                inputState.mouseLeftDown = false;
+                inputState.MouseLeftDown = false;
             }
         } else if (this.m_clicked === true) {
             this.m_clicked = false;

@@ -1,9 +1,5 @@
-import { AbstractComponent, Camera2D, ContentManager } from '@ludeschersoftware/scenerenderer';
+import { InputStateInterface, AbstractComponent, Camera2D } from '@ludeschersoftware/scenerenderer';
 import { Vec2 } from 'gl-matrix';
-
-interface InputState {
-    keyboardKeyDown: Record<string, boolean>;
-}
 
 class CameraComponent extends AbstractComponent {
     private m_camera: Camera2D;
@@ -17,29 +13,29 @@ class CameraComponent extends AbstractComponent {
         // Optional setup logic
     }
 
-    public LoadContent(contentManager: ContentManager): void {
+    public LoadContent(): void {
         // Optional content loading logic
     }
 
-    public Update(deltaTime: number, inputState: InputState): void | false {
-        if (inputState.keyboardKeyDown['ArrowUp']) {
+    public Update(_deltaTime: number, inputState: InputStateInterface): void | false {
+        if (inputState.KeyboardKeyDown['ArrowUp']) {
             this.m_camera.MovePosition(Vec2.fromValues(0, 10));
         }
 
-        if (inputState.keyboardKeyDown['ArrowRight']) {
+        if (inputState.KeyboardKeyDown['ArrowRight']) {
             this.m_camera.MovePosition(Vec2.fromValues(-10, 0));
         }
 
-        if (inputState.keyboardKeyDown['ArrowDown']) {
+        if (inputState.KeyboardKeyDown['ArrowDown']) {
             this.m_camera.MovePosition(Vec2.fromValues(0, -10));
         }
 
-        if (inputState.keyboardKeyDown['ArrowLeft']) {
+        if (inputState.KeyboardKeyDown['ArrowLeft']) {
             this.m_camera.MovePosition(Vec2.fromValues(10, 0));
         }
     }
 
-    public Draw(context: CanvasRenderingContext2D): void | false {
+    public Draw(): void | false {
         // Optional draw logic
     }
 }

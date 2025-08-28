@@ -1,4 +1,4 @@
-import { AbstractComponent, ContentManager, Renderer } from '@ludeschersoftware/scenerenderer';
+import { AbstractComponent, getConfig, GlobalConfigInterface, InputStateInterface } from '@ludeschersoftware/scenerenderer';
 import GameOverComponent from './GameOverComponent';
 import Ref from '@ludeschersoftware/ref';
 import Rectangle from '../Rectangle';
@@ -10,11 +10,8 @@ interface Direction {
     key: string;
 }
 
-interface InputState {
-    keyboardKeyDown: Record<string, boolean>;
-}
-
 class SnakeComponent extends AbstractComponent {
+    private m_global_config: GlobalConfigInterface;
     static TILE_SIZE: number = 50;
     static FOOD_POINTS: number = 50;
 
@@ -32,9 +29,10 @@ class SnakeComponent extends AbstractComponent {
     constructor(stopGame: Ref<boolean>) {
         super({ x: 0, y: 0, width: 0, height: 0 });
 
+        this.m_global_config = getConfig("1");
         this.m_stop_game = stopGame;
-        this.m_width_range = Math.floor(Renderer.CONFIG.canvas.width / SnakeComponent.TILE_SIZE);
-        this.m_height_range = Math.floor(Renderer.CONFIG.canvas.height / SnakeComponent.TILE_SIZE);
+        this.m_width_range = Math.floor(this.m_global_config.Canvas.width / SnakeComponent.TILE_SIZE);
+        this.m_height_range = Math.floor(this.m_global_config.Canvas.height / SnakeComponent.TILE_SIZE);
 
         const SNAKE_POSITION = this._GetRandomPosition();
         this.m_snake = [new Rectangle(SNAKE_POSITION.x, SNAKE_POSITION.y, SnakeComponent.TILE_SIZE, SnakeComponent.TILE_SIZE)];
@@ -53,12 +51,12 @@ class SnakeComponent extends AbstractComponent {
 
     public Initialize(): void { }
 
-    public LoadContent(contentManager: ContentManager): void { }
+    public LoadContent(): void { }
 
-    public Update(deltaTime: number, inputState: InputState): void {
+    public Update(_deltaTime: number, inputState: InputStateInterface): void {
         if (this.m_stop_game.value || this.m_game_over.value) return;
 
-        const keys = inputState.keyboardKeyDown;
+        const keys = inputState.KeyboardKeyDown;
 
         if (this.m_last_direction_key !== 'KeyW' && this.m_last_direction_key !== 'KeyS' && keys['KeyW']) {
             this.m_snake_direction = { x: 0, y: -SnakeComponent.TILE_SIZE };
@@ -75,7 +73,7 @@ class SnakeComponent extends AbstractComponent {
         }
 
         if (this.m_old_update_tick + 75 < Date.now()) {
-            const head = this.m_snake[0];
+            const head = this.m_snake[0]!;
             const newHead = new Rectangle(head.x + this.m_snake_direction.x, head.y + this.m_snake_direction.y, SnakeComponent.TILE_SIZE, SnakeComponent.TILE_SIZE);
             this.m_snake.unshift(newHead);
 
@@ -89,13 +87,13 @@ class SnakeComponent extends AbstractComponent {
             }
 
             for (let i = 1; i < this.m_snake.length; i++) {
-                if (newHead.Intersects(this.m_snake[i])) {
+                if (newHead.Intersects(this.m_snake[i]!)) {
                     this.m_game_over.value = true;
                 }
             }
 
             for (let i = 0; i < this.m_foods.length; i++) {
-                if (this.m_foods[i].Intersects(newHead)) {
+                if (this.m_foods[i]!.Intersects(newHead)) {
                     this.m_foods[i] = this._CreateFood();
                     this.m_score.value += SnakeComponent.FOOD_POINTS;
                 } else {
@@ -142,7 +140,7 @@ class SnakeComponent extends AbstractComponent {
     }
 
     private _GetStartDirection(): Direction {
-        const SNAKE_HEAD = this.m_snake[0];
+        const SNAKE_HEAD = this.m_snake[0]!;
         const WIDTH_DIFF = SNAKE_HEAD.x - (this.m_width_range * SnakeComponent.TILE_SIZE) / 2;
         const HEIGHT_DIFF = SNAKE_HEAD.y - (this.m_height_range * SnakeComponent.TILE_SIZE) / 2;
 

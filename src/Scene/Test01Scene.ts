@@ -40,7 +40,7 @@ class Test01Scene extends AbstractScene {
                         y: 100,
                         width: 650,
                         height: 365,
-                        src: 'https://staging.gaertnerei-ludescher.at/assets/media/2024030312462165e4630d7f40d1.73816928..jpeg',
+                        src: 'assets/world-collapse-doomsday-scene-digital-painting.jpg',
                     }),
                     new WorldButtonComponent({
                         title: 'Clickme',
@@ -58,7 +58,7 @@ class Test01Scene extends AbstractScene {
                 applyCamera: false, components: [
                     new FPSComponent(),
                     new CursorComponent(10),
-                    new CameraComponent(this.Camera),
+                    new CameraComponent(this.Camera!),
                 ]
             }
         ];

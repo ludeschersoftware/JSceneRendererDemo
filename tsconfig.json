@@ -8,6 +8,7 @@
         "rootDir": "src",
         "sourceMap": true,
         "target": "ESNext",
+        "allowJs": false,
         "alwaysStrict": true,
         "noImplicitAny": true,
         "noImplicitThis": true,
@@ -17,7 +18,11 @@
         "noImplicitOverride": true,
         "noImplicitReturns": true,
         "noUnusedLocals": true,
-        "noUnusedParameters": false,
+        "noUnusedParameters": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUncheckedIndexedAccess": true,
+        "strictBindCallApply": true,
+        "strictBuiltinIteratorReturn": true,
         "lib": [
             "DOM",
             "ESNext"
@@ -28,7 +33,10 @@
         "strictNullChecks": true,
         "strictFunctionTypes": true,
         "strictPropertyInitialization": true,
-        "noFallthroughCasesInSwitch": true
+        "noFallthroughCasesInSwitch": true,
+        "useUnknownInCatchVariables": true,
+        "allowArbitraryExtensions": false,
+        "forceConsistentCasingInFileNames": true,
     },
     "include": [
         "src/**/*"

@@ -26,7 +26,7 @@ class TextureComponent extends AbstractComponent {
         this.m_texture = contentManager.LoadFromSrc(this.m_src);
     }
 
-    public Update(deltaTime: number, inputState: unknown): false | void {
+    public Update(): false | void {
         // Optional update logic
     }
 

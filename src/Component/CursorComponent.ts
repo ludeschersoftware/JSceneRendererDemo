@@ -1,11 +1,4 @@
-import { AbstractComponent, ContentManager } from "@ludeschersoftware/scenerenderer";
-
-interface InputState {
-    mousePositionCamera: {
-        x: number;
-        y: number;
-    };
-}
+import { AbstractComponent, InputStateInterface } from "@ludeschersoftware/scenerenderer";
 
 class CursorComponent extends AbstractComponent {
     private m_radius: number;
@@ -25,13 +18,13 @@ class CursorComponent extends AbstractComponent {
         // Optional setup logic
     }
 
-    public LoadContent(contentManager: ContentManager): void {
+    public LoadContent(): void {
         // Optional content loading logic
     }
 
-    public Update(deltaTime: number, inputState: InputState): void {
-        this.x = inputState.mousePositionCamera.x;
-        this.y = inputState.mousePositionCamera.y;
+    public Update(_deltaTime: number, inputState: InputStateInterface): void {
+        this.x = inputState.MousePositionCamera.x;
+        this.y = inputState.MousePositionCamera.y;
     }
 
     public Draw(context: CanvasRenderingContext2D): void | false {

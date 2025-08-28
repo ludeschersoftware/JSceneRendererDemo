@@ -1,13 +1,10 @@
 import TextComponent from './TextComponent';
 import ButtonComponent from './ButtonComponent';
-import { AbstractComponent, CEventType, ContentManager, Renderer } from '@ludeschersoftware/scenerenderer';
+import { AbstractComponent, CEventType, getConfig, GlobalConfigInterface, InputStateInterface } from '@ludeschersoftware/scenerenderer';
 import Ref from '@ludeschersoftware/ref';
 
-interface InputState {
-    keyboardKeyDown: Record<string, boolean>;
-}
-
 class MenuComponent extends AbstractComponent {
+    private m_global_config: GlobalConfigInterface;
     public m_container: HTMLElement;
     private m_stop_game: Ref<boolean>;
     private m_backgroundcolor: string;
@@ -21,6 +18,7 @@ class MenuComponent extends AbstractComponent {
             height: 2000,
         });
 
+        this.m_global_config = getConfig("1");
         this.m_container = container;
         this.m_stop_game = stopGame;
         this.m_backgroundcolor = '#03adfc';
@@ -69,22 +67,24 @@ class MenuComponent extends AbstractComponent {
         // Optional setup logic
     }
 
-    public LoadContent(contentManager: ContentManager): void {
+    public LoadContent(): void {
         // Optional content loading logic
     }
 
-    public Update(deltaTime: number, inputState: InputState): boolean | void {
-        this.width = Renderer.CONFIG.canvas.width * 0.666;
-        this.height = Renderer.CONFIG.canvas.height;
-        this.x = (Renderer.CONFIG.canvas.width - this.width) / 2;
+    public Update(_deltaTime: number, inputState: InputStateInterface): false | void {
+        this.width = this.m_global_config.Canvas.width * 0.666;
+        this.height = this.m_global_config.Canvas.height;
+        this.x = (this.m_global_config.Canvas.width - this.width) / 2;
 
-        if ('Escape' in inputState.keyboardKeyDown) {
+        if ('Escape' in inputState.KeyboardKeyDown) {
             this.m_show = !this.m_show;
             this.m_stop_game.value = this.m_show;
-            delete inputState.keyboardKeyDown['Escape'];
+            delete inputState.KeyboardKeyDown['Escape'];
         }
 
-        return this.m_show;
+        if (this.m_show === false) {
+            return false;
+        }
     }
 
     public Draw(context: CanvasRenderingContext2D): void | false {

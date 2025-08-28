@@ -1,8 +1,9 @@
 import Ref from "@ludeschersoftware/ref";
-import { AbstractComponent, ContentManager, Renderer } from "@ludeschersoftware/scenerenderer";
+import { AbstractComponent, getConfig, GlobalConfigInterface } from "@ludeschersoftware/scenerenderer";
 import TextComponent from "./TextComponent";
 
 class GameOverComponent extends AbstractComponent {
+    private m_global_config: GlobalConfigInterface;
     private m_show: Ref<boolean>;
     private m_score: Ref<number>;
     private m_score_component: TextComponent;
@@ -15,6 +16,7 @@ class GameOverComponent extends AbstractComponent {
             height: 0,
         });
 
+        this.m_global_config = getConfig("1");
         this.m_show = show;
         this.m_score = score;
         this.m_score_component = new TextComponent({
@@ -36,15 +38,15 @@ class GameOverComponent extends AbstractComponent {
         // Optional setup logic
     }
 
-    public LoadContent(contentManager: ContentManager): void {
+    public LoadContent(): void {
         // Optional content loading logic
     }
 
-    public Update(deltaTime: number, inputState: unknown): void {
-        this.width = Renderer.CONFIG.canvas.width * 0.666;
-        this.height = Renderer.CONFIG.canvas.height * 0.666;
-        this.x = (Renderer.CONFIG.canvas.width - this.width) / 2;
-        this.y = (Renderer.CONFIG.canvas.height - this.height) / 2;
+    public Update(): void {
+        this.width = this.m_global_config.Canvas.width * 0.666;
+        this.height = this.m_global_config.Canvas.height * 0.666;
+        this.x = (this.m_global_config.Canvas.width - this.width) / 2;
+        this.y = (this.m_global_config.Canvas.height - this.height) / 2;
 
         if (this.m_show.value) {
             this.m_score_component.title = `Score: ${this.m_score.value}`;
