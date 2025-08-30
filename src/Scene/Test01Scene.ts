@@ -1,4 +1,4 @@
-import { AbstractScene, Camera2D, CEventType } from "@ludeschersoftware/scenerenderer";
+import { AbstractScene, Camera2D, CEventType, getConfig, GlobalConfigInterface } from "@ludeschersoftware/scenerenderer";
 import FPSComponent from "../Component/FPSComponent";
 import CursorComponent from "../Component/CursorComponent";
 import CameraComponent from "../Component/CameraComponent";
@@ -7,12 +7,12 @@ import WorldButtonComponent from "../Component/WorldButtonComponent";
 import ButtonComponent from "../Component/ButtonComponent";
 
 class Test01Scene extends AbstractScene {
-    private m_container: HTMLElement;
+    private m_config: GlobalConfigInterface;
 
-    constructor(id: string, camera: Camera2D, container: HTMLElement) {
+    constructor(id: string, camera: Camera2D) {
         super(id, camera);
 
-        this.m_container = container;
+        this.m_config = getConfig("1");
     }
 
     public override Initialize(): void {
@@ -28,9 +28,7 @@ class Test01Scene extends AbstractScene {
                     width: 500,
                     height: 100,
                 }, () => {
-                    this.m_container.dispatchEvent(new CustomEvent(CEventType.LoadScene, {
-                        detail: "MainMenu",
-                    }));
+                    this.m_config.EventHub.send(CEventType.LoadScene, 'MainMenu');
                 })]
             },
             {

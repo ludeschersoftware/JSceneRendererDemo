@@ -5,14 +5,12 @@ import FPSComponent from "../Component/FPSComponent";
 import CursorComponent from "../Component/CursorComponent";
 
 class MainMenuScene extends AbstractScene {
-    private m_global_config: GlobalConfigInterface;
-    private m_container: HTMLElement;
+    private m_config: GlobalConfigInterface;
 
-    constructor(id: string, container: HTMLElement) {
+    constructor(id: string) {
         super(id);
 
-        this.m_global_config = getConfig("1");
-        this.m_container = container;
+        this.m_config = getConfig("1");
     }
 
     public override Initialize(): void {
@@ -38,17 +36,13 @@ class MainMenuScene extends AbstractScene {
                         {
                             title: 'Start Game',
                             backgroundColor: '#12a308',
-                            x: this.m_global_config.Canvas.width / 2 - 250,
+                            x: this.m_config.Canvas.width / 2 - 250,
                             y: 350,
                             width: 500,
                             height: 100,
                         },
                         () => {
-                            this.m_container.dispatchEvent(
-                                new CustomEvent(CEventType.LoadScene, {
-                                    detail: 'Test01',
-                                })
-                            );
+                            this.m_config.EventHub.send(CEventType.LoadScene, 'Test01');
                         }
                     ),
                 ],
@@ -60,7 +54,7 @@ class MainMenuScene extends AbstractScene {
                         {
                             title: 'Level #2',
                             backgroundColor: '#17ebb6',
-                            x: this.m_global_config.Canvas.width / 2 - 220,
+                            x: this.m_config.Canvas.width / 2 - 220,
                             y: 320,
                             width: 500,
                             height: 100,
@@ -84,18 +78,14 @@ class MainMenuScene extends AbstractScene {
                             height: 200,
                         },
                         () => {
-                            this.m_container.dispatchEvent(
-                                new CustomEvent(CEventType.LoadScene, {
-                                    detail: 'snake',
-                                })
-                            );
+                            this.m_config.EventHub.send(CEventType.LoadScene, 'snake');
                         }
                     ),
                     new ButtonComponent(
                         {
                             title: 'Level #4',
                             backgroundColor: '#8f1575',
-                            x: this.m_global_config.Canvas.width / 2 - 200,
+                            x: this.m_config.Canvas.width / 2 - 200,
                             y: 300,
                             width: 400,
                             height: 100,

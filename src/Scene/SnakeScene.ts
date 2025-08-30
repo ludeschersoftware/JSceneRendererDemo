@@ -6,13 +6,11 @@ import FPSComponent from "../Component/FPSComponent";
 import CursorComponent from "../Component/CursorComponent";
 
 class SnakeScene extends AbstractScene {
-    private m_container: HTMLElement;
     private m_stop_game: Ref<boolean>;
 
-    constructor(id: string, container: HTMLElement) {
+    constructor(id: string) {
         super(id);
 
-        this.m_container = container;
         this.m_stop_game = new Ref(false);
     }
 
@@ -26,7 +24,7 @@ class SnakeScene extends AbstractScene {
             },
             {
                 applyCamera: false,
-                components: [new MenuComponent(this.m_container, this.m_stop_game)],
+                components: [new MenuComponent(this.m_stop_game)],
             },
             {
                 applyCamera: false,

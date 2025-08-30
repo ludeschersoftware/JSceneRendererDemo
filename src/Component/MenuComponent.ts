@@ -4,13 +4,12 @@ import { AbstractComponent, CEventType, getConfig, GlobalConfigInterface, InputS
 import Ref from '@ludeschersoftware/ref';
 
 class MenuComponent extends AbstractComponent {
-    private m_global_config: GlobalConfigInterface;
-    public m_container: HTMLElement;
+    private m_config: GlobalConfigInterface;
     private m_stop_game: Ref<boolean>;
     private m_backgroundcolor: string;
     private m_show: boolean;
 
-    constructor(container: HTMLElement, stopGame: Ref<boolean>) {
+    constructor(stopGame: Ref<boolean>) {
         super({
             x: 0,
             y: 0,
@@ -18,8 +17,7 @@ class MenuComponent extends AbstractComponent {
             height: 2000,
         });
 
-        this.m_global_config = getConfig("1");
-        this.m_container = container;
+        this.m_config = getConfig("1");
         this.m_stop_game = stopGame;
         this.m_backgroundcolor = '#03adfc';
         this.m_show = false;
@@ -53,11 +51,7 @@ class MenuComponent extends AbstractComponent {
                     height: 100,
                 },
                 () => {
-                    this.m_container.dispatchEvent(
-                        new CustomEvent(CEventType.LoadScene, {
-                            detail: 'MainMenu',
-                        })
-                    );
+                    this.m_config.EventHub.send(CEventType.LoadScene, 'MainMenu');
                 }
             )
         );
@@ -72,9 +66,9 @@ class MenuComponent extends AbstractComponent {
     }
 
     public Update(_deltaTime: number, inputState: InputStateInterface): false | void {
-        this.width = this.m_global_config.Canvas.width * 0.666;
-        this.height = this.m_global_config.Canvas.height;
-        this.x = (this.m_global_config.Canvas.width - this.width) / 2;
+        this.width = this.m_config.Canvas.width * 0.666;
+        this.height = this.m_config.Canvas.height;
+        this.x = (this.m_config.Canvas.width - this.width) / 2;
 
         if ('Escape' in inputState.KeyboardKeyDown) {
             this.m_show = !this.m_show;

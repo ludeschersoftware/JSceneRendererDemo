@@ -11,7 +11,7 @@ interface Direction {
 }
 
 class SnakeComponent extends AbstractComponent {
-    private m_global_config: GlobalConfigInterface;
+    private m_config: GlobalConfigInterface;
     static TILE_SIZE: number = 50;
     static FOOD_POINTS: number = 50;
 
@@ -29,10 +29,10 @@ class SnakeComponent extends AbstractComponent {
     constructor(stopGame: Ref<boolean>) {
         super({ x: 0, y: 0, width: 0, height: 0 });
 
-        this.m_global_config = getConfig("1");
+        this.m_config = getConfig("1");
         this.m_stop_game = stopGame;
-        this.m_width_range = Math.floor(this.m_global_config.Canvas.width / SnakeComponent.TILE_SIZE);
-        this.m_height_range = Math.floor(this.m_global_config.Canvas.height / SnakeComponent.TILE_SIZE);
+        this.m_width_range = Math.floor(this.m_config.Canvas.width / SnakeComponent.TILE_SIZE);
+        this.m_height_range = Math.floor(this.m_config.Canvas.height / SnakeComponent.TILE_SIZE);
 
         const SNAKE_POSITION = this._GetRandomPosition();
         this.m_snake = [new Rectangle(SNAKE_POSITION.x, SNAKE_POSITION.y, SnakeComponent.TILE_SIZE, SnakeComponent.TILE_SIZE)];

@@ -18,9 +18,9 @@ import SnakeScene from './Scene/SnakeScene';
         Id: "1",
     });
 
-    REN1.RegisterScene(new MainMenuScene("MainMenu", WRAPPER));
-    REN1.RegisterScene(new Test01Scene("Test01", CAM2D, WRAPPER));
-    REN1.RegisterScene(new SnakeScene("snake", WRAPPER));
+    REN1.RegisterScene(new MainMenuScene("MainMenu"));
+    REN1.RegisterScene(new Test01Scene("Test01", CAM2D));
+    REN1.RegisterScene(new SnakeScene("snake"));
 
     REN1.RunAsync("MainMenu");
 })();
