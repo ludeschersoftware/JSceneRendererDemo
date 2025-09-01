@@ -1,6 +1,7 @@
 import { InputStateInterface, AbstractComponent } from "@ludeschersoftware/scenerenderer";
 import TextComponent from "./TextComponent";
 import { CollidesWith } from "../Utils/CollisionHelper";
+import AlignType from "../Enum/AlignType";
 
 interface ButtonOptions {
     x: number;
@@ -12,7 +13,6 @@ interface ButtonOptions {
     fillStyle?: string;
     textAlign?: CanvasTextAlign;
     textBaseline?: CanvasTextBaseline;
-    font?: string;
 }
 
 class ButtonComponent extends AbstractComponent {
@@ -29,28 +29,16 @@ class ButtonComponent extends AbstractComponent {
 
         this.addComponent(
             new TextComponent({
-                title: options.title ?? 'Button',
-                fillStyle: options.fillStyle ?? '#a83256',
-                textAlign: options.textAlign ?? 'start',
-                textBaseline: options.textBaseline ?? 'top',
-                font: options.font ?? '40px verdana, sans-serif',
-                width: 0,
-                height: 0,
-                x: 0,
-                y: 0,
+                value: options.title ?? 'Button',
+                color: options.fillStyle ?? '#a83256',
+                fontSize: '40px',
+                horizontalAlign: AlignType.Center,
+                verticalAlign: AlignType.Center,
             })
         );
     }
 
-    public Initialize(): void {
-        // Optional setup logic
-    }
-
-    public LoadContent(): void {
-        // Optional content loading logic
-    }
-
-    public Update(_deltaTime: number, inputState: InputStateInterface): void | false {
+    public override Update(_deltaTime: number, inputState: InputStateInterface): void | false {
         const CAM_HITBOX = {
             x: inputState.MousePositionCamera.x,
             y: inputState.MousePositionCamera.y,
@@ -71,7 +59,7 @@ class ButtonComponent extends AbstractComponent {
         }
     }
 
-    public Draw(context: CanvasRenderingContext2D): void | false {
+    public override Draw(context: CanvasRenderingContext2D): void | false {
         context.fillStyle = this.backgroundColor;
         context.fillRect(this.x, this.y, this.width, this.height);
     }

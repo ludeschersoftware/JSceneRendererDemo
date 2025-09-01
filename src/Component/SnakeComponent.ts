@@ -27,7 +27,7 @@ class SnakeComponent extends AbstractComponent {
     private m_score: Ref<number>;
 
     constructor(stopGame: Ref<boolean>) {
-        super({ x: 0, y: 0, width: 0, height: 0 });
+        super();
 
         this.m_config = getConfig("1");
         this.m_stop_game = stopGame;
@@ -49,11 +49,7 @@ class SnakeComponent extends AbstractComponent {
         this.addComponent(new GameOverComponent(this.m_game_over, this.m_score));
     }
 
-    public Initialize(): void { }
-
-    public LoadContent(): void { }
-
-    public Update(_deltaTime: number, inputState: InputStateInterface): void {
+    public override Update(_deltaTime: number, inputState: InputStateInterface): void {
         if (this.m_stop_game.value || this.m_game_over.value) return;
 
         const keys = inputState.KeyboardKeyDown;
@@ -105,7 +101,7 @@ class SnakeComponent extends AbstractComponent {
         }
     }
 
-    public Draw(context: CanvasRenderingContext2D): void {
+    public override Draw(context: CanvasRenderingContext2D): void {
         context.fillStyle = '#327d00';
         for (const rect of this.m_snake) {
             context.fillRect(rect.x, rect.y, rect.width, rect.height);

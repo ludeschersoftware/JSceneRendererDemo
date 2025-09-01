@@ -9,15 +9,7 @@ class CameraComponent extends AbstractComponent {
         this.m_camera = camera;
     }
 
-    public Initialize(): void {
-        // Optional setup logic
-    }
-
-    public LoadContent(): void {
-        // Optional content loading logic
-    }
-
-    public Update(_deltaTime: number, inputState: InputStateInterface): void | false {
+    public override Update(_deltaTime: number, inputState: InputStateInterface): void | false {
         if (inputState.KeyboardKeyDown['ArrowUp']) {
             this.m_camera.MovePosition(Vec2.fromValues(0, 10));
         }
@@ -35,7 +27,7 @@ class CameraComponent extends AbstractComponent {
         }
     }
 
-    public Draw(): void | false {
+    public override Draw(): void | false {
         // Optional draw logic
     }
 }

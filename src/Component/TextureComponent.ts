@@ -18,19 +18,11 @@ class TextureComponent extends AbstractComponent {
         this.m_src = options.src;
     }
 
-    public Initialize(): void {
-        // Optional setup logic
-    }
-
-    public LoadContent(contentManager: ContentManager): void {
+    public override LoadContent(contentManager: ContentManager): void {
         this.m_texture = contentManager.LoadFromSrc(this.m_src);
     }
 
-    public Update(): false | void {
-        // Optional update logic
-    }
-
-    public Draw(context: CanvasRenderingContext2D): void | false {
+    public override Draw(context: CanvasRenderingContext2D): void | false {
         if (this.m_texture !== undefined) {
             context.drawImage(
                 this.m_texture.GetImageBitmap(),
