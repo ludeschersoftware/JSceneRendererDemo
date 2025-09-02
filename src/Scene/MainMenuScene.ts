@@ -35,7 +35,8 @@ class MainMenuScene extends AbstractScene {
                     new ButtonComponent(
                         {
                             title: 'Start Game',
-                            backgroundColor: '#12a308',
+                            backgroundColor: '#13760cff',
+                            color: 'white',
                             x: this.m_config.Canvas.width / 2 - 250,
                             y: 350,
                             width: 500,
@@ -53,7 +54,8 @@ class MainMenuScene extends AbstractScene {
                     new ButtonComponent(
                         {
                             title: 'Level #2',
-                            backgroundColor: '#17ebb6',
+                            backgroundColor: '#127159ff',
+                            color: 'white',
                             x: this.m_config.Canvas.width / 2 - 220,
                             y: 320,
                             width: 500,
@@ -71,7 +73,8 @@ class MainMenuScene extends AbstractScene {
                     new ButtonComponent(
                         {
                             title: 'Start Snake',
-                            backgroundColor: '#3279a8',
+                            backgroundColor: '#265d81ff',
+                            color: 'white',
                             x: 0,
                             y: 0,
                             width: 500,
@@ -84,7 +87,8 @@ class MainMenuScene extends AbstractScene {
                     new ButtonComponent(
                         {
                             title: 'Level #4',
-                            backgroundColor: '#8f1575',
+                            backgroundColor: '#741a60ff',
+                            color: 'white',
                             x: this.m_config.Canvas.width / 2 - 200,
                             y: 300,
                             width: 400,
@@ -98,7 +102,7 @@ class MainMenuScene extends AbstractScene {
             },
             {
                 applyCamera: false,
-                components: [new FPSComponent(), new CursorComponent(10)],
+                components: [new FPSComponent(), new CursorComponent()],
             },
         ];
     }

@@ -36,11 +36,9 @@ class MenuComponent extends AbstractComponent {
         this.addComponent(
             new ButtonComponent(
                 {
-                    backgroundColor: '#4248f5',
+                    backgroundColor: '#b22020ff',
                     title: 'Main Menu',
-                    fillStyle: 'red',
-                    textAlign: 'center',
-                    textBaseline: 'middle',
+                    color: 'white',
                     x: 0,
                     y: 300,
                     width: 350,

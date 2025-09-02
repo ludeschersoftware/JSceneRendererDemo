@@ -22,7 +22,8 @@ class Test01Scene extends AbstractScene {
             {
                 applyCamera: false, components: [new ButtonComponent({
                     title: '< Go back',
-                    backgroundColor: '#fc8403',
+                    backgroundColor: '#9a4f00ff',
+                    color: 'white',
                     x: 20,
                     y: 20,
                     width: 500,
@@ -55,7 +56,7 @@ class Test01Scene extends AbstractScene {
             {
                 applyCamera: false, components: [
                     new FPSComponent(),
-                    new CursorComponent(10),
+                    new CursorComponent(),
                     new CameraComponent(this.Camera!),
                 ]
             }

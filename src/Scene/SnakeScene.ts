@@ -28,7 +28,7 @@ class SnakeScene extends AbstractScene {
             },
             {
                 applyCamera: false,
-                components: [new FPSComponent(), new CursorComponent(10)],
+                components: [new FPSComponent(), new CursorComponent()],
             },
         ];
 

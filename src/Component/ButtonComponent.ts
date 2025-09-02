@@ -2,17 +2,13 @@ import { InputStateInterface, AbstractComponent } from "@ludeschersoftware/scene
 import TextComponent from "./TextComponent";
 import { CollidesWith } from "../Utils/CollisionHelper";
 import AlignType from "../Enum/AlignType";
+import FontOptions from "../Interfaces/FontOptions";
+import { Box, Loose } from "@ludeschersoftware/types";
 
-interface ButtonOptions {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
+interface ButtonOptions extends Box, FontOptions {
     title?: string;
     backgroundColor?: string;
-    fillStyle?: string;
-    textAlign?: CanvasTextAlign;
-    textBaseline?: CanvasTextBaseline;
+    color?: string;
 }
 
 class ButtonComponent extends AbstractComponent {
@@ -20,21 +16,29 @@ class ButtonComponent extends AbstractComponent {
     private m_clicked: boolean;
     private m_callback: () => void;
 
-    constructor(options: ButtonOptions, callback: () => void) {
-        super(options);
+    constructor(options: Loose<ButtonOptions>, callback: () => void) {
+        super(Object.assign({
+            x: 0,
+            y: 0,
+            width: 10,
+            height: 10,
+        }, options));
 
-        this.backgroundColor = options.backgroundColor ?? '#32a854';
+        const { title, backgroundColor, ...rest } = options;
+
+        this.backgroundColor = backgroundColor ?? 'white';
         this.m_clicked = false;
         this.m_callback = callback;
 
         this.addComponent(
-            new TextComponent({
-                value: options.title ?? 'Button',
-                color: options.fillStyle ?? '#a83256',
-                fontSize: '40px',
+            new TextComponent(Object.assign({
+                value: title ?? 'BUTTON',
+                color: 'black',
+                fontFamily: 'Sniglet',
+                fontSize: '60px',
                 horizontalAlign: AlignType.Center,
                 verticalAlign: AlignType.Center,
-            })
+            }, rest))
         );
     }
 
@@ -60,8 +64,86 @@ class ButtonComponent extends AbstractComponent {
     }
 
     public override Draw(context: CanvasRenderingContext2D): void | false {
+        let radius = 16;
+        let width = this.width;
+        let height = this.height;
+        let x = this.x;
+        let y = this.y;
+
         context.fillStyle = this.backgroundColor;
-        context.fillRect(this.x, this.y, this.width, this.height);
+
+        context.beginPath();
+        context.moveTo(x + radius, y);
+        context.lineTo(x + width - radius, y);
+        context.arcTo(x + width, y, x + width, y + radius, radius);
+        context.lineTo(x + width, y + height - radius);
+        context.arcTo(x + width, y + height, x + width - radius, y + height, radius);
+        context.lineTo(x + radius, y + height);
+        context.arcTo(x, y + height, x, y + height - radius, radius);
+        context.lineTo(x, y + radius);
+        context.arcTo(x, y, x + radius, y, radius);
+        context.closePath();
+
+        context.fill();
+
+        radius -= 2;
+        height -= 8;
+
+        context.fillStyle = "#ffffff30";
+
+        context.beginPath();
+        context.moveTo(x + radius, y);
+        context.lineTo(x + width - radius, y);
+        context.arcTo(x + width, y, x + width, y + radius, radius);
+        context.lineTo(x + width, y + height - radius);
+        context.arcTo(x + width, y + height, x + width - radius, y + height, radius);
+        context.lineTo(x + radius, y + height);
+        context.arcTo(x, y + height, x, y + height - radius, radius);
+        context.lineTo(x, y + radius);
+        context.arcTo(x, y, x + radius, y, radius);
+        context.closePath();
+
+        context.fill();
+
+        radius -= 2;
+
+        x += 5;
+        y += 5;
+        width -= 10;
+        height -= 10;
+
+        context.strokeStyle = "#ffffff37";
+        context.lineWidth = 2;
+
+        context.beginPath();
+        context.moveTo(x + radius, y);
+        context.lineTo(x + width - radius, y);
+        context.arcTo(x + width, y, x + width, y + radius, radius);
+        context.lineTo(x + width, y + height - radius);
+        context.arcTo(x + width, y + height, x + width - radius, y + height, radius);
+        context.lineTo(x + radius, y + height);
+        context.arcTo(x, y + height, x, y + height - radius, radius);
+        context.lineTo(x, y + radius);
+        context.arcTo(x, y, x + radius, y, radius);
+        context.closePath();
+
+        context.stroke();
+
+        height = Math.floor(height / 2);
+        context.fillStyle = "#ffffff37";
+
+        context.beginPath();
+        context.moveTo(x + radius, y);
+        context.lineTo(x + width - radius, y);
+        context.arcTo(x + width, y, x + width, y + radius, radius);
+        context.lineTo(x + width, y + height);
+        context.lineTo(x, y + height);
+        context.lineTo(x, y + radius);
+        context.arcTo(x, y, x + radius, y, radius);
+        context.closePath();
+
+        context.fill();
+
     }
 }
 
