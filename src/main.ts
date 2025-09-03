@@ -1,5 +1,4 @@
-import { Vec2 } from 'gl-matrix';
-import { Renderer, Camera2D } from '@ludeschersoftware/scenerenderer';
+import { Renderer } from '@ludeschersoftware/scenerenderer';
 import MainMenuScene from './Scene/MainMenuScene';
 import Test01Scene from './Scene/Test01Scene';
 import SnakeScene from './Scene/SnakeScene';
@@ -11,16 +10,14 @@ import SnakeScene from './Scene/SnakeScene';
         return;
     }
 
-    const CAM2D = new Camera2D(new Vec2(WRAPPER.clientWidth, WRAPPER.clientHeight));
-
     const REN1: Renderer = new Renderer({
         Container: WRAPPER,
         Id: "1",
     });
 
-    REN1.RegisterScene(new MainMenuScene("MainMenu"));
-    REN1.RegisterScene(new Test01Scene("Test01", CAM2D));
-    REN1.RegisterScene(new SnakeScene("snake"));
+    REN1.RegisterScene(new MainMenuScene());
+    REN1.RegisterScene(new Test01Scene());
+    REN1.RegisterScene(new SnakeScene());
 
     REN1.RunAsync("MainMenu");
 })();

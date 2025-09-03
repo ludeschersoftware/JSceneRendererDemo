@@ -1,22 +1,19 @@
-import { AbstractScene, Camera2D, CEventType, getConfig, GlobalConfigInterface } from "@ludeschersoftware/scenerenderer";
+import { AbstractScene, CEventType, GlobalConfigInterface } from "@ludeschersoftware/scenerenderer";
 import FPSComponent from "../Component/FPSComponent";
 import CursorComponent from "../Component/CursorComponent";
 import CameraComponent from "../Component/CameraComponent";
 import TextureComponent from "../Component/TextureComponent";
 import WorldButtonComponent from "../Component/WorldButtonComponent";
 import ButtonComponent from "../Component/ButtonComponent";
+import SceneId from "../Enum/SceneId";
 
 class Test01Scene extends AbstractScene {
-    private m_config: GlobalConfigInterface;
-
-    constructor(id: string, camera: Camera2D) {
-        super(id, camera);
-
-        this.m_config = getConfig("1");
+    constructor() {
+        super(SceneId.Test01);
     }
 
-    public override Initialize(): void {
-        super.Initialize();
+    public override Initialize(config: GlobalConfigInterface): void {
+        super.Initialize(config);
 
         this.Layers = [
             {
@@ -57,7 +54,7 @@ class Test01Scene extends AbstractScene {
                 applyCamera: false, components: [
                     new FPSComponent(),
                     new CursorComponent(),
-                    new CameraComponent(this.Camera!),
+                    new CameraComponent(this.m_config.Camera),
                 ]
             }
         ];

@@ -1,20 +1,17 @@
-import { AbstractScene, CEventType, getConfig, GlobalConfigInterface } from "@ludeschersoftware/scenerenderer";
+import { AbstractScene, CEventType, GlobalConfigInterface } from "@ludeschersoftware/scenerenderer";
 import TextureComponent from "../Component/TextureComponent";
 import ButtonComponent from "../Component/ButtonComponent";
 import FPSComponent from "../Component/FPSComponent";
 import CursorComponent from "../Component/CursorComponent";
+import SceneId from "../Enum/SceneId";
 
 class MainMenuScene extends AbstractScene {
-    private m_config: GlobalConfigInterface;
-
-    constructor(id: string) {
-        super(id);
-
-        this.m_config = getConfig("1");
+    constructor() {
+        super(SceneId.MainMenu);
     }
 
-    public override Initialize(): void {
-        super.Initialize();
+    public override Initialize(config: GlobalConfigInterface): void {
+        super.Initialize(config);
 
         this.Layers = [
             {
